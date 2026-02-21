@@ -3,12 +3,14 @@ import dotenv from "dotenv";
 import { prisma } from "./db/prisma.js";
 
 import healthRoutes from "./routes/health.routes.js"
+import usersRoutes from "./routes/users.routes.js"
 
 const app = express();
 dotenv.config();
 app.use(express.json());
 
 app.use(healthRoutes);
+app.use(usersRoutes);
 
 const port = Number(process.env.PORT);
 

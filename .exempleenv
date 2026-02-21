@@ -1,2 +1,5 @@
 // não se usa em projetos
 // apenas para estudo
+
+PORT=3000
+DATABASE_URL="postgresql://postgres:Senha123@@localhost:5432/banco_user?schema=public"

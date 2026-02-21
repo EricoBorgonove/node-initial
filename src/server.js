@@ -55,17 +55,34 @@ app.put("/users/:id", async (req, res)=>{
         if (!name || !email){
             return res.status(400).json({error: "informe um name ou email para atualizar"});
         }
-        const user = await prisma.user.update({
+        await prisma.user.updateMany({
             where: {id},
             data: {name, email},
         });
 
-        return res.status(200).json(user);
+        res.status(200).json({
+        ok: true,
+        service: "usuário atualizado"
+    });
     }catch (err){
         return res.status(400).json({error: "não foi possível atualizar o usuário", 
             details: String(err.message || err)});
     }
 
+})
+app.delete ("/users/:id" , async (req, res) => {
+    try{
+        const id = Number (req.params.id);
+        await prisma.delete({
+            where: {id},
+        })
+
+        res.status(204).send();
+
+        }catch (err){
+        return res.status(400).json({error: "não foi possível excluir o usuário", 
+            details: String(err.message || err)});
+    }
 })
 
 

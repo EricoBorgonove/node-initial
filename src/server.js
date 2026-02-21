@@ -17,7 +17,6 @@ app.post("/users", async (req, res)=>{
     try{
         const {name, email} = req.body;
 
-
         if (!name || !email){
             return res.status(400).json({error: "name e email são obrigatórios"});
         }
@@ -32,6 +31,26 @@ app.post("/users", async (req, res)=>{
     }
 
 })
+app.get("/users", async (req, res) =>{
+    const id = Number (req.params.id);
+
+    const users = await prisma.user.findMany({
+        orderBy: {id: "desc"}
+    });
+    res.json(users)
+})
+app.get("/users/:id", async (req, res) =>{
+    const id = Number (req.params.id);
+
+    const user = await prisma.user.findUnique({
+        where: {id},
+    })
+    if (!user){
+        return res.status(400).json({error: "usuário não encontrado"});
+    }
+    res.json(user)
+})
+
 
 // ultima coisa do arquivo por enquanto
 app.listen (port, ()=> {
